@@ -1,0 +1,59 @@
+Control Structurey - Day2 : 24.02.2026 3 hour task learning!
+Conditional statements (if, else, switchf)
+Loops (for, range)
+Basic error handling
+
+//------------------------------------------------------------------------------------------------
+SWITCH -- SINGLEcase VAR . 
+Bu o demekdir ki meselen case 1: , case 2: , case 3: , ve s/
+SWITCH -- MULTIcase VAR .
+Bu o  demekdir ki demeli case 1,2,3: , case 4,5 ve s/
+
+package main 
+import (
+    'fmt'
+)
+
+func main(){
+    bal := 88
+
+    switch bal {
+        case 56,67:
+            fmt.Println("Bu ballar 88 deyil!")
+        case 75,85,88:
+            fmt.Println("Bu ballar asagi yuxari 88-dir!")
+        defoult :
+            fmt.Println("Eks halda sen sagol kesildin.")
+    }
+}
+
+umumiyyetle yeni caseler etmek olur
+|-- Case in icinde funk cagirmaq olur!
+
+\\--------------------------------------------------------------------------------------------//
+Switch de qanunlar biraz ferqlidir!
+Amma bur  da bir qanun var demeli sen a ya onun deyeri nedirse menimsetmisen onu da  sorusmalisn 
+MESELEN --> a:="s" , case "s,(yeni string)" olmalidir!
+package main 
+import ("fmt")
+
+func main(){
+    a := 3 
+    switch a {
+        case 1:
+            fmt.Println("a 1e beraberdir.")
+        case 3: 
+            fmt.Println("a 3e beraberdir.")
+        defoult:
+            fmt.Println("a ne 1 nede 3 dur!")
+    }
+}
+\\--------------------------------SWITCH HAQQINDA BILINMELI MEGAMLI---------------------------//
+1.SWITCH - avtomatik  (brack) verir.
+Go-da hər case-in sonuna break yazmağa ehtiyac yoxdur.
+Go bir uyğunluq tapan kimi kodu icra edir və switch-dən çıxır.
+2.DEFOULT - eger hec bir case uygun gelmse conditiona onda defoult isleyir.
+3.Bir Case in icinde bir nece mumkun ehtimali yoxlaya bilirik!
+for example : 
+case 1,2,4 :
+    fmt.Println("a meseln 1,2 ve 3-dur")
