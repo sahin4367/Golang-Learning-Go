@@ -1,0 +1,50 @@
+Functiony -- 28.02.2026 -- 15:00
+Function declarations and return
+Multiple return value
+Variadic function
+Defer, panic, and recover
+--------------------------------------------------------------------------------------------------------
+*Meselen bir funk teyin edirik daha sonra ise main funk onu cagriirq~!
+Multiple return value
+|- bu o demekdir ki bir funk eyni anda bir nece deyer qaytara biler~!
+for example 
+package main 
+
+import ( 
+    "fmt"
+)
+
+func bolme( a , b float64 ) (float64 , string) {
+    if b == 0 {
+        return 0 // "0- a bolmek  olmaz"~!
+    }
+    return a / b // "Success-dir~!"
+}
+
+func main() {
+    fmt.Println(bolme(42,6))
+}
+--------------------------------------------------------------------------------------
+Variadic Function
+|-- bu o  demekdir ki demeli istifadeci nece dene parametr gondereceyeni bilmirse 
+onda biz Variadic funk istifade edirik! (...) bu 3 noqte ile isare olunur!
+
+func SumNum(number ...int) int  {
+    sum := 0
+    for _, n := range number {
+        sum += n
+    }
+
+    return sum
+}
+
+//bunu asagida demeli cagiranda demeli biz 
+//SumNum(1,2,4,5,6) //-- burda biz istediyimzi kimi ede bilerik!
+//bu bir nov JS de Spread ve Rest operatora oxsayir~!
+--------------------------------------------------------------------------------------------------
+DEFER , PANIC , RECOVER 
+biz meselen bunlar err-larin idare olunmasi idi; -meselen js de try-catch lardan istfade 
+olunurudsa burda o  yoxdur ~!
+|- Hemise axirda isleyir~!
+|- Panic : Proqrami oldurmek  istiyir~!
+|- Panici tutur~!
