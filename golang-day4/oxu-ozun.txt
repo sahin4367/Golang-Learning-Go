@@ -1,0 +1,41 @@
+Pointers and Memory Management | 03.03.2026 10:25 | 3 hour|
+-Understanding pointers in Go
+-Pointers vs. values
+-Using pointers with functions
+--------------------------------------------------------------------------------------------------
+okey 
+POINTER ~=~ "GOSTERICILER" demekdir!
+Bir deyisen yaratdigda , onuncun sen yaddasda yer ayirmis olursan.
+Pointer hemin yaddasdaki , yeri(yeni UNVANI) sene mene gostere bilern bir isaredir, ox-dur  deyek ve s.
+(Address and Value) - this is prinsipe~!
+Deyer ferz edek bir qutunun Icindekidir , Pointer  ise qutunun ustundeki Etiketdir~!
+
+Pointer(& ve *) isarelerinden istifade olunur demeli.
+|-&- bu neyniyir : gedir sene yaddasda ne hardaolgunu deyir!
+meselen sene evin unvanini deyir bu okeydir bele.
+|-*- bu neyniyir : bu gedib unvani bilenden sonra geib hemin evde bezi deyisikllkiler ede biler(bilir).
+qisa desek 
+& - deyir {HARDADIR}
+* - deyir {ICINDE NE VAR}
+
+Ulduz isaresi (*) iki mena dasiyir!
+A. Demeli Type Declerations for example var p *int 
+{tip elan eden zaman *-nun p-nin bir pointers oldugunu bildirir.}
+{bu misaldaki kimi  tam eded deyil , tam edede isare eden bir pointerdir.}
+
+B. Demeli hemdde bu ifade daxilinde DEREFRECING rolunu oynayir nece ? 
+{İfadə daxilində, * pointerin ünvanını açır (dereference edir)}
+{və onun işarə etdiyi dəyərə çıxış imkanı verir}    
+--------------------------------------------------------------------------------------------------------------------
+{Stack vs Heap} 
+BUNLAR NE IS GORUR : 
+STACK
+|\-- suretlidir daha tez dolur , cunki yeri mehduddur!
+|\-- meselen  funki yazilan kicik metnler burda saxlaniilir ,  funk biten kimi temizlenir!
+HEAP 
+|\-- boyuk bir ambar kimi ferz edek , eger melumat boyukdurse uzunmudddetli lazimdirsa okey!
+|\-- yer coxdur; 
+Golangin  C++ dan fergi ondadnir ki Garbage Collector var bu gedib avtomatik zibili temizleyir
+Progeramcini dusunmesine ehtiyac daha qalmir , Go ozu qerar verir kopliyyatoru vasitesi ile Pointer
+her yerdeki melumati isare ede biler~!
+                                              
