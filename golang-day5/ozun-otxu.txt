@@ -1,0 +1,51 @@
+d e r s - 6 | 07.03.2026    
+Arrays, Slices, and Maps : 
+Array basics.
+Slices: creation, manipulation, and internal mechanics.
+Maps: creating, accessing, and iterating.
+--------------------------------------------------------------------------------------------
+https://www.freecodecamp.org/news/arrays-slices-and-maps-in-go-a-quick-guide-to-collection-types/
+-----------------------------------------------------------------------------------------------
+Array : yeni massivler okey
+Golangda massivler 
+verilir : 
+
+var a [4]int --> bu gedib neyleyir bir arrays yeni  massiv yaradir  ve deyir 
+ki yanliz 4 simvol qebul ede biler
+fmt.Println(a[0])
+
+
+
+SLICE 
+|--Yeni dilimler , bu ARRAYI , yeni massivi dilimlere bolur!
+A slice keeps three things : slice 3 seyi saxlayir
+1. Pointers - A reference to the underlying array.
+2. Lenghts - The number of elements in the slice.
+3. Capasity - The maximum number of elements the slice can hold 
+SLICE ARRAYdan ferqli olaraq dinmaicdir , slice uzunlugu ve tuutmu melsn yeni nese elave etseler ve 
+Silselr DIMAMIC oldugu ucun deyisecek slice bir nov~!
+Bir nov massivlerin  butun problermmlerini bunlar hell edir 
+SLICE YARATMAQ UCUN -   {[MAKE]} den isitfade edirik ;
+for example : make([]int, 3 , 5) || burda 3 o demkdir ki 3 simvol tuta bilcek arxada yer ayir
+Sadece ele meqamlar olur ki biz onuncun evvlecden yer saxala bilerik{geleck ucun} 5 o demekdir 
+len - 3 
+Amma - Capasity - 5 olacaq
+
+s := []int{} - Düzdür. Bu, içi boş amma "canlı" bir slice yaradır.
+var s [...]int{} - SƏHVDIR! Çünki [...] yazanda Go deyir ki: 
+"Mən elementləri sayaraq massivin ölçüsünü təyin edəcəm". 
+Amma sən içinə heç nə qoymamısan ({}), Go neçə dənə yer ayıracağını bilmir.
+
+SLICE DA ELEMNTLERI ELAVE ET - {[APPEND]}
+|-bu goturub elemt elave edir, fso!
+tutaq ki yazdig append(s,1) go algotimi nece iseyir ? verir ki menim ehtiyat tutumum varmi ?
+Yeni Capasity > Lenghts okey iselyir 
+Go novbeti bos xanaya regem yazir ve len ++ bir vahid artir!
+Bes Capasity == Lenghts onda Yaddasda daha boyuk  bir Massiv  ayirir(2 qati  qederi)
+daha sonra ise bu evvelkileri yeni massive kopyaliyir!
+yeni elemnti soonuna elave edir 
+
+How to Slice Slices - 
+s[1:4] — 1-ci indeksdən başla, 4-cü indeksə qədər get (amma 4-ü götürmə). Yəni: 1, 2, 3.
+s[:3] — Əvvəldən başla (0), 3-cü indeksə qədər.
+s[2:] — 2-ci indeksdən başla, sonuna qədər get.
