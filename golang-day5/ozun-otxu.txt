@@ -2,7 +2,7 @@ d e r s - 6 | 07.03.2026
 Arrays, Slices, and Maps : 
 Array basics.
 Slices: creation, manipulation, and internal mechanics.
-Maps: creating, accessing, and iterating.
+Maps: creating, accessing, and iterating. - Map = key ilə value tapmaq üçün istifadə olunan data structure.
 --------------------------------------------------------------------------------------------
 https://www.freecodecamp.org/news/arrays-slices-and-maps-in-go-a-quick-guide-to-collection-types/
 -----------------------------------------------------------------------------------------------

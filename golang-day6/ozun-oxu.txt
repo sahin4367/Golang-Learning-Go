@@ -1,0 +1,83 @@
+Golang learning day6 : | 08.03.2026 | 3 hour | 
+Structs and Methods
+-Defining and using structs
+-Methods on structs
+-Embedding structs
+https://go.dev/tour/methods -- sharch best learning ~!{10/26 today 10:10-13:10}
+-------------------------------------------------------------------------------------------------------
+Golang da demeli methodlar demeli , mueyyen bir type ile elaqeli olan , ve receiver qebul eden funkdir.
+Method = Function + Receiver
+
+You can declare a method on non-struct types, too!
+Go-da method təkcə struct üçün deyil, başqa custom type üçün də yazmaq olar.
+type MyFloat float64 | ozumuznu yaratdiig typedir~!
+BIZ BUNUNCUN METHOD YAZA BILERIK~!
+func (f MyFloat) Abs() float64 {
+    if f  < 0 {
+        return float64(-f)
+    }
+    return float64(f)
+}
+Meqsed Buudr : Yeni Struct olmasa bele biz METHOD YAZA BILERIK.
+---------------------------------------------------------------------------------------------------
+Pointer receivers - Aid numunelre izahllar:
+type Nums struct {
+	a, b float64
+    //Burda bir type yaradiriq ele bil a ve b reqemlerini structile
+}
+
+func (c Nums) Abs() float64 {
+	return math.Sqrt(c.a*c.a + c.b*c.b)
+    //Daha sonra bir func yaradiriq Abs() ve onun c deyisenine Hasni type de oldugunu deyirik
+    //ve bize float64 qaytaracaq(tipi bu olacaq), esas returun da riyazi  _/a^2+b^2 qaytaracaq! 
+}
+
+func (c *Nums) PointFunc(d float64) {
+	c.a = c.a * d
+	c.b = c.b * d
+    //Bu ne demekdir ? 
+    //c *Nums {bu Pointer demkdir - menasi odur ki orjinal struct deyisecek } , bele olmayanda ise
+    //sadece Copy olaraq gedir type struct deyisilimir~!
+    //burda PointFunc funk yaradir demeli d deyiseni teyin olunur okey~!
+    //asagda maine baxsaq c := Nums{6,8} olsa bele o struct deyisecek 
+    olacaq - {60,80} buna gorede Pointer bu isi gorud daha sonra 
+    //esas func ise dusecek Abs() {bize returunu vercek }
+    tebbi ki biz onu main funck cagiraraq print elesesk ~!
+}
+
+func main() {
+	c := Nums{6, 8}
+	c.PointFunc(10)
+	fmt.Println(c.Abs())
+}
+----------------------------------------------------------------------------------- ---------------
+Methods and pointer indirection :  ???????
+bu ne demekdir  SADE FUNK ILE METHODLAR
+FUNK
+|-- bu ne edir demeli eger funkisyadirsa sen pointer vermelissen 
+qisa yaziram 
+func Pointer(c *Nums , d float64) {
+    //...bla -bla
+    //...bla-bla
+}
+func main(){
+    c := Nums{3,4}
+    PointFunc(&c, 2) //melsen burdaki kimi mutleq evvelde veribse pointer kimi
+    //Esas meqaam burdadir
+}
+METHOD
+|-- bunun isleme birinsipi var sirf Golangda demlii o necedir?
+meseln biz yazmisdiq ki 
+func (c *Nums) PointFunc(d float64) {
+    //...
+    // bla-bla
+}
+
+func main(){
+    c := Nums{3,4} //evtomatik getdi type struka onu deyismeye (3,4) oldu
+    c.PointFunc(2) //yaziriqda cunki methosdur PointFunc in ona gore eslinde biz bilmeden ediriki
+    //Es;ind egolangin arxada gedir onu bilirsen nece edir ?
+    //Bax bele : (&c).PointFunc(2) bunu bele qebul etmis olur !!
+    //Ince meqamlardir ki bunlari bilmeliyem----->FSO/.
+}
+-------------------------------------------------------------------------------------------------
