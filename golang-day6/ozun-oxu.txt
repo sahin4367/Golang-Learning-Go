@@ -81,3 +81,66 @@ func main(){
     //Ince meqamlardir ki bunlari bilmeliyem----->FSO/.
 }
 -------------------------------------------------------------------------------------------------
+INTERFASE : 
+Nil sohbeti  demeli , qayda var ki interfase(value ve type) saxlayir bilirik.
+Interface yalnız o zaman nil-dir ki,
+type və value hər ikisi nil olsun.type == nil ve value==nil okey onda INTERFASE == nil olacaq~!
+||--En
+An interface value in Go is nil only when both its type and value are nil. 
+If the interface holds a nil concrete value but has a type, the interface itself is not nil.
+||--Aze
+Go-da interface yalnız o zaman nil olur ki, həm type, həm də value nil olsun. 
+Əgər interface daxilində type varsa, amma value nil-dirsə, interface özü nil hesab olunmur.
+[
+    BEZEN ELE OLUR KI DEMELI , MESELEN (nil,nil) olur interfacesde basa dusdun~!
+    bu TAM INTERFASE adlanir. Yeni interface tam bosdur.
+]
+----------------------------------------------------------------------------------------------------------
+Golangda EMPTY INTERFASE NEDIR ? 
+Bu interface{} bax bele yazilir demeli , Go-1.18 den sonra (any) bu o  demkdir ki hec bir method teyin etmir!
+MESELEN biz yazirdiq ki 
+type I interface {
+    M()
+}
+
+Bele yazirdiqda indi baxiriq ki , Bu interface implement etmek ucun M() methodu lazimidr~!
+Amma demeli , bele yazanda : interface {} bu 0 method teleb edir.
+||BUTUN TIPLER AVTOMATIK BUNU IMPLEMENT EDIR||
+ONA GOREDE EMPTY interface her seyi saxalaya biler~!
+i = 5
+i = "hello"
+i = true
+i = 3.14
+i = struct{}{} // icinde isletinlen  tipe qoymaq olar!
+AMMA GO-DA BIR PROBELM VAR KI DEMELI , SEN EMPTY INTERFASE {TIPI} GIZLEDIR.
+var i interface{}
+i = 10
+indi i içində int var, amma Go bunu bilmir.||Buna diqqet etmek lazimdir!
+---------------------------------------------------------------------------------------
+Type Assertions : tip testiqlemeleri
+||Type assertion interface daxilindəki real (concrete) tipi çıxarmaq üçündür.||
+Burada bir innterfaces yatradiriq meseln:
+var i interface{} = 10
+v := i(int) 
+
+t := i(T)
+burda i interfacedir , T ise o  interface icindeki tipidir!
+Go yoxlayirki i -nin icindeki tip T-dirmi?
+eger okeydirse bize  hemin valunu qaytarir bu misaldaki kimi meselen : 10
+eger okey deyilse tipi eyni deyilse ona XEYIR  - panic olacaq~!
+\\||panic: interface conversion: string is not int (string BERABER-DEYIL int)||//
+--------------------------------------------------------------------------------------------------------
+TYPE SWITCHES LOGIC : 
+demeli burda bir interface yaradirqi  ve onu swiotch case ler ile  onun tipini asanpliqala mueyyen etdirik
+-------------------------------------------------------------------------------------------------------
+Stringers : bu nedir vacib bir meqamdir bilinmledir~!
+Əgər bir type String() string methoduna malikdirsə,
+o avtomatik Stringer interface-ni implement edir.
+type Stringer interface {
+	String() string
+}
+Bu interface içində method söhbətidir. 
+Burada fmt paketi xüsusi bir interface istifadə edir ki, 
+obyekt özünü necə string kimi göstərməlidir onu təyin etsin.
+
+day_6 : 09.03.2025 3 hour | go methods 19/26.

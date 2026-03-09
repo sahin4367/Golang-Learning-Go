@@ -7,23 +7,27 @@ import (
 
 /*
 GO INTERFACES :
-|- Interface nədir?
 
-Interface Go-da methodların toplusudur.
+- Interface nədir?
+  Interface Go-da methodların toplusudur.
 
-Qayda:
-Əgər bir type interface-də olan bütün methodları
-implement edirsə, o interface-i avtomatik implement etmiş sayılır.
+- Qayda:
+  Əgər bir type interface-də olan bütün methodları implement edirsə,
+  o interface-i avtomatik implement etmiş sayılır.
 
-Go-da:
+- Go-da `implements` və `extends` kimi sözlər YOXDUR.
+  Bu sistem "Implicit Implementation" adlanır.
 
-implements
-extends
+- Qeyd:
+  Interface, dəyər və type saxlayır, amma özündə method saxlamır.
 
-kimi sözlər YOXDUR.
-
-Bu sistem "Implicit Implementation" adlanır.
+  Interface dəyəri iki hissədən ibarətdir:
+    1. Konkret type
+    2. Value
+  Interface üzərində method çağırıldıqda, həmin method konkret type üzərində icra olunur.
 */
+
+// ------------------ Example 1: Basic Number Interface ------------------
 
 type Number interface {
 	Abs() float64
@@ -47,7 +51,7 @@ func (p *Point) Abs() float64 {
 	return math.Sqrt(p.X*p.X + p.Y*p.Y)
 }
 
-// Basic Interface Example
+// ------------------ Example 2: Printer Interface ------------------
 
 type Printer interface {
 	Print()
@@ -61,10 +65,75 @@ func (m Message) Print() {
 	fmt.Println(m.Text)
 }
 
+// ------------------ Example 3: Nil Receiver ------------------
+
+type I interface {
+	M()
+}
+
+type T struct {
+	S string
+}
+
+func (t *T) M() {
+	if t == nil {
+		fmt.Println("nil qaytarsiin!")
+		return
+	}
+	fmt.Println(t.S)
+}
+
+func descripe(i I) {
+	fmt.Printf("(%v, %T)\n", i, i)
+}
+
+// ------------------ Example 4: Type Assertion ------------------
+
+func typeAssertionExamples() {
+	var i interface{} = 3
+
+	// Tip eynidirsə, value qaytarır
+	tip := i.(int)
+	fmt.Println("Tip int-dir:", tip)
+
+	// İki dəyər ilə yoxlama (ok pattern)
+	a, b := i.(string)
+	fmt.Println("Value:", a) // value boş olacaq, çünki type fərqlidir
+	fmt.Println("OK?:", b)   // false olacaq
+}
+
+// ------------------ Example 5: Type Switch ------------------
+
+func TipYoxla(i interface{}) {
+	switch a := i.(type) {
+	case int:
+		fmt.Println("Integer:", a+2)
+	case string:
+		fmt.Println("String:", a+" salam.")
+	case bool:
+		fmt.Println("Bool:", a)
+	default:
+		fmt.Println("Tipi bilinmir!")
+	}
+}
+
+// ------------------ Example 6: Stringer Interface ------------------
+
+type Person struct {
+	name string
+	age  int
+}
+
+// String methodu avtomatik fmt.Stringer interface-ni implement edir
+func (p Person) String() string {
+	return fmt.Sprintf("%v (%v years)", p.name, p.age)
+}
+
+// ------------------ MAIN ------------------
+
 func main() {
 
-	// Interface ilə işləmə
-
+	// Example 1: Number interface
 	var n Number
 
 	f := MyFloatt(-math.Sqrt2)
@@ -76,10 +145,34 @@ func main() {
 	n = p
 	fmt.Println("Point Abs:", n.Abs())
 
-	// Sadə interface example
-
+	// Example 2: Printer interface
 	var pr Printer
 	pr = Message{"Salam gözəl insan."}
-
 	pr.Print()
+
+	// Example 3: Nil receiver
+	var i I
+	var t *T
+
+	i = t
+	descripe(i)
+	i.M()
+
+	i = &T{"Salamun Aleykum"}
+	descripe(i)
+	i.M()
+
+	// Example 4: Type assertion
+	typeAssertionExamples()
+
+	// Example 5: Type switch
+	TipYoxla(10)
+	TipYoxla("Shahin")
+	TipYoxla(false)
+	TipYoxla(3.14)
+
+	// Example 6: Stringer interface
+	a := Person{"Vusal Quli", 23}
+	b := Person{"Tural Boli", 18}
+	fmt.Println(a, b)
 }
