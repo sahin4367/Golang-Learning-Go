@@ -144,3 +144,29 @@ Burada fmt paketi xüsusi bir interface istifadə edir ki,
 obyekt özünü necə string kimi göstərməlidir onu təyin etsin.
 
 day_6 : 09.03.2025 3 hour | go methods 19/26.
+---------------------------------------------------------------------------------------------------------
+day_6 : 10.03.2025 3 hour | go methods end 
+
+ERror interface - Bu ne demkdir 
+eger type Error() string metoduna malikdirse onda o error interface ni implement edir ~!
+type error interface {
+    ERror() //for example 
+}--------------------------------------------------------------------------------------------------------
+READERS INTERFASE
+bu ne demekdir demeli | melumat oxuyan obyektdir ~!
+Yeni bir data menbeyidir - Okey.
+bu mnebe asagdakilar ola biler  : 
+file , network connektions , string, zip  file , http request body
+Hamsi READERS interface implement edir~!
+type Reader interface {
+    Read (p []byte)(n int , err error)
+}
+
+Reader olan hər type bu methodu yazmalıdır --> Read()
+-----------------------------------------------------------------------------------------------
+IMAGES INTERFASE : BU  NE DEMKDIR KOMPUTERIN YADDASINDA nece tesevvur edirik bunlari baxaq~!
+go cox seyi interface lerile hell etdiyi ucun biz gedirik demeli , 
+Go deyir ki, bir şeyin "şəkil" sayılması üçün o, mütləq 3 suala cavab verməlidir:
+1. ColorModel() – "Sənin rənglərin hansı dildədir?"
+2. Bounds() – "Sənin ölçülərin nədir?"
+3. At(x, y int) – "Bu nöqtədə hansı rəng var?"

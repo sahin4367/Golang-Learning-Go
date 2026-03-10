@@ -48,7 +48,7 @@ func ScaleFunc(v *Vertex, f float64) {
 }
 
 // MAIN
-func main2() {
+func main() {
 	// 1️
 	n := Numbers{6, 8}
 	fmt.Println("Abs Numbers:", Abs(n))

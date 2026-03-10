@@ -7,24 +7,9 @@ import (
 
 /*
 GO INTERFACES :
-
-- Interface nədir?
-  Interface Go-da methodların toplusudur.
-
-- Qayda:
-  Əgər bir type interface-də olan bütün methodları implement edirsə,
-  o interface-i avtomatik implement etmiş sayılır.
-
-- Go-da `implements` və `extends` kimi sözlər YOXDUR.
-  Bu sistem "Implicit Implementation" adlanır.
-
-- Qeyd:
-  Interface, dəyər və type saxlayır, amma özündə method saxlamır.
-
-  Interface dəyəri iki hissədən ibarətdir:
-    1. Konkret type
-    2. Value
-  Interface üzərində method çağırıldıqda, həmin method konkret type üzərində icra olunur.
+- Interface nədir? Interface Go-da methodların toplusudur.
+- Qayda: Əgər bir type interface-də olan bütün methodları implement edirsə, o interface-i avtomatik implement etmiş sayılır.
+- Go-da `implements` və `extends` kimi sözlər YOXDUR. Bu sistem "Implicit Implementation" adlanır.
 */
 
 // ------------------ Example 1: Basic Number Interface ------------------
@@ -77,13 +62,14 @@ type T struct {
 
 func (t *T) M() {
 	if t == nil {
-		fmt.Println("nil qaytarsiin!")
+		fmt.Println("nil qaytarsinn!")
 		return
 	}
 	fmt.Println(t.S)
 }
 
-func descripe(i I) {
+// describe olaraq düzəldildi (orfoqrafiya)
+func describe(i I) {
 	fmt.Printf("(%v, %T)\n", i, i)
 }
 
@@ -93,12 +79,16 @@ func typeAssertionExamples() {
 	var i interface{} = 3
 
 	// Tip eynidirsə, value qaytarır
-	tip := i.(int)
-	fmt.Println("Tip int-dir:", tip)
+	// Diqqət: Əgər i int olmasaydı, bu sətir proqramı çökdürərdi (panic).
+	// Ona görə həmişə "ok" ilə yoxlamaq yaxşıdır.
+	tip, ok := i.(int)
+	if ok {
+		fmt.Println("Tip int-dir:", tip)
+	}
 
 	// İki dəyər ilə yoxlama (ok pattern)
 	a, b := i.(string)
-	fmt.Println("Value:", a) // value boş olacaq, çünki type fərqlidir
+	fmt.Println("Value:", a) // value boş olacaq (""), çünki type fərqlidir
 	fmt.Println("OK?:", b)   // false olacaq
 }
 
@@ -113,7 +103,7 @@ func TipYoxla(i interface{}) {
 	case bool:
 		fmt.Println("Bool:", a)
 	default:
-		fmt.Println("Tipi bilinmir!")
+		fmt.Printf("Tipi bilinmir! Tip: %T\n", a)
 	}
 }
 
@@ -132,7 +122,6 @@ func (p Person) String() string {
 // ------------------ MAIN ------------------
 
 func main() {
-
 	// Example 1: Number interface
 	var n Number
 
@@ -155,11 +144,11 @@ func main() {
 	var t *T
 
 	i = t
-	descripe(i)
+	describe(i) // i-nin özü nil deyil (interface daxilində nil T tipi saxlayır)
 	i.M()
 
 	i = &T{"Salamun Aleykum"}
-	descripe(i)
+	describe(i)
 	i.M()
 
 	// Example 4: Type assertion
@@ -174,5 +163,6 @@ func main() {
 	// Example 6: Stringer interface
 	a := Person{"Vusal Quli", 23}
 	b := Person{"Tural Boli", 18}
+	// fmt.Println avtomatik olaraq String() metodunu çağırır
 	fmt.Println(a, b)
 }
