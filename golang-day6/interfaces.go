@@ -119,9 +119,7 @@ func (p Person) String() string {
 	return fmt.Sprintf("%v (%v years)", p.name, p.age)
 }
 
-// ------------------ MAIN ------------------
-
-func main() {
+func mai1() {
 	// Example 1: Number interface
 	var n Number
 
@@ -134,7 +132,6 @@ func main() {
 	n = p
 	fmt.Println("Point Abs:", n.Abs())
 
-	// Example 2: Printer interface
 	var pr Printer
 	pr = Message{"Salam gözəl insan."}
 	pr.Print()
@@ -144,7 +141,7 @@ func main() {
 	var t *T
 
 	i = t
-	describe(i) // i-nin özü nil deyil (interface daxilində nil T tipi saxlayır)
+	describe(i)
 	i.M()
 
 	i = &T{"Salamun Aleykum"}
@@ -163,6 +160,5 @@ func main() {
 	// Example 6: Stringer interface
 	a := Person{"Vusal Quli", 23}
 	b := Person{"Tural Boli", 18}
-	// fmt.Println avtomatik olaraq String() metodunu çağırır
 	fmt.Println(a, b)
 }
