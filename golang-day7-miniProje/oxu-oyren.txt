@@ -1,0 +1,254 @@
+GOLANG - DAY 7 | ÖYRƏNMƏ QEYDLƏRI
+Tarix: 14 Mart 2026
+-------------------------------------------------------------------------------------------------
+BU GÜN NƏ ÖYRƏNDİM?
+---------------------
+
+1. SLICE - REFERENCE TYPE
+--------------------------
+Slice kopyalandıqda ünvan kopyalanır, dəyər yox.
+Yəni iki dəyişən eyni yaddaşa baxır.
+
+  x := []int{1, 2, 3}
+  y := x
+  y[0] = 99
+  fmt.Println(x[0])  // → 99 !
+
+  Qayda: Slice reference type-dır.
+         Array isə value type-dır (tam kopyalanır).
+
+  [EN] "Slice is a reference type — it points to the same memory"
+
+
+2. VAR vs :=
+-------------
+  var x int   → func xaricində də işləyir, zero value verir (0)
+  x := 0      → yalnız func içində işləyir, qısa yazılış
+
+  [EN] "var declares globally, := declares locally"
+
+
+3. MAP
+-------
+Açar → Dəyər (key → value) cütləri saxlayır.
+
+  ages := map[string]int{}
+  ages["Sahin"] = 22        // əlavə et
+  fmt.Println(ages["Sahin"]) // oxu
+  delete(ages, "Sahin")      // sil
+
+  value, ok := ages["Sahin"] // var olub-olmadığını yoxla
+  if ok {
+      fmt.Println(value)
+  }
+
+  [EN] "A map stores key-value pairs"
+  [EN] "Check if key exists using the two-value assignment"
+
+
+4. INTERFACE
+-------------
+Interface bir "contract" (müqavilə) kimidir.
+Hansı metodların olması lazım olduğunu bildirir.
+
+  type Animal interface {
+      Sound() string
+  }
+
+  type Dog struct{}
+  func (d Dog) Sound() string { return "Woof" }
+
+  // Dog, Animal interface-ini implement edir
+  // çünki Sound() metodu var
+
+  [EN] "Interface defines behavior, not data"
+  [EN] "If it has the method, it satisfies the interface"
+
+
+5. COMPILE QAYDASI
+-------------------
+Golang-da dəmir qayda:
+"Elan etdinsə, istifadə etməlisən!"
+
+  result := add(3, 4)
+  // result heç yerdə istifadə olunmursa → COMPILE ERROR!
+
+  Həll:
+  fmt.Println(result)  // istifadə et
+  _ = result           // ignore et (blank identifier)
+
+  [EN] "If you declare it, you must use it"
+  [EN] "_ is the blank identifier — use it to ignore values"
+
+
+------------------------================================================================----------------------
+ALQORİTM MƏSƏLƏLƏRI
+
+
+6. FIZZBUZZ
+------------
+1-dən 30-a kimi:
+  - 3-ə bölünürsə     → "Fizz"
+  - 5-ə bölünürsə     → "Buzz"
+  - Hər ikisinə       → "FizzBuzz"
+
+  ÖYRƏNDIYIM DƏRS: Şərtlərin sırası vacibdir!
+  Əvvəlcə xüsusi hal (FizzBuzz), sonra ümumi hal.
+
+  for i := 1; i <= 30; i++ {
+      switch {
+      case i%3==0 && i%5==0:
+          fmt.Println(i, "FizzBuzz")
+      case i%3 == 0:
+          fmt.Println(i, "Fizz")
+      case i%5 == 0:
+          fmt.Println(i, "Buzz")
+      }
+  }
+
+  [EN] "Always handle the specific case before the general case"
+  [EN] "&& means AND (both must be true)"
+  [EN] "|| means OR (at least one must be true)"
+
+
+7. PALİNDROME
+--------------
+Hər iki tərəfdən eyni oxunan söz: "telet", "racecar"
+
+  func isPalindrome(s string) bool {
+      reversed := ""
+      for i := 0; i < len(s); i++ {
+          reversed = string(s[i]) + reversed
+      }
+      return s == reversed
+  }
+
+  Addım-addım:
+  "telet"
+  i=0 → reversed = "t"
+  i=1 → reversed = "et"
+  i=2 → reversed = "let"
+  i=3 → reversed = "elet"
+  i=4 → reversed = "telet" 
+
+  [EN] "Reverse the string and compare with original"
+  [EN] "s[i] returns a byte — use string(s[i]) to convert"
+
+
+8. SLICE CƏMİ
+--------------
+  func sum(a []int) int {
+      total := 0
+      for _, v := range a {
+          total += v
+      }
+      return total
+  }
+
+  [EN] "Accumulate — add each element to the total"
+  [EN] "+= means add and assign"
+
+
+9. MAX ƏDƏD
+------------
+  func maxNumber(a []int) int {
+      max := a[0]
+      for i := 1; i < len(a); i++ {
+          if a[i] > max {
+              max = a[i]
+          }
+      }
+      return max
+  }
+
+  [EN] "Start with the first element as maximum"
+  [EN] "Update max only when you find something larger"
+
+
+------------------------================================================================----------------------
+MİNİ LAYİHƏ — STUDENT GRADE TRACKER
+10. LAYİHƏDƏ İSTİFADƏ OLUNANLAR
+----------------------------------
+
+  STRUCT:
+    type Student struct {
+        name  string
+        grade float64
+    }
+
+  METHOD:
+    func (g Student) Bal(b float64) string { ... }
+
+  AVERAGE FUNKSIYA:
+    func averageGrade(students []Student) float64 {
+        total := 0.0
+        for _, s := range students {
+            total += s.grade
+        }
+        return total / float64(len(students))
+    }
+
+  HTML YAZMA:
+    html := generateHTML(students)
+    os.WriteFile("index.html", []byte(html), 0644)
+
+  [EN] "Go can generate HTML files using os.WriteFile"
+  [EN] "fmt.Sprintf formats strings with placeholders"
+  [EN] "%s = string, %.1f = float with 1 decimal, %d = integer"
+
+
+------------------------================================================================----------------------
+ƏN VACIB İNGİLİS SÖZLƏRİ (Bu gün öyrəndiklərim)
+  reference       = istinad
+  declare         = elan etmək
+  key             = açar
+  value           = dəyər
+  exists          = mövcuddur
+  contract        = müqavilə
+  implement       = həyata keçirmək
+  condition       = şərt
+  order           = sıra
+  logic error     = məntiq xətası
+  reverse         = tərsinə çevirmək
+  character       = hərf, simvol
+  index           = mövqe, sıra nömrəsi
+  accumulate      = toplamaq, yığmaq
+  maximum         = ən böyük
+  compare         = müqayisə etmək
+  average         = orta
+  template        = şablon
+  placeholder     = yer tutucu
+  permission      = icazə
+  clean code      = oxunması asan, sadə kod
+  readable        = oxunaqlı
+
+
+------------------------================================================================----------------------
+BUGÜN ANLADIĞIM ƏSAS DƏRS
+
+
+  1. Koda atlamadan əvvəl DÜŞÜNMƏLİYƏM: alqoritmi tutmaq ucun
+       → Bu problem nə istəyir?
+       → Əlimdə nə var?
+       → Addım-addım nə etməliyəm?
+
+  2. Məntiq mənimdir — syntax təcrübə ilə gəlir!
+
+  3. Loop xaricində declare et, içində istifadə et.
+
+  4. Şərtlərin sırası həmişə vacibdir!
+
+  [EN] "Think before you type"
+  [EN] "Logic is yours — syntax comes with practice"
+  [EN] "Declare variables outside the loop if you need them after"
+  [EN] "Always handle the specific case before the general case"
+
+------------------------================================================================----------------------
+NÖVBƏTİ HƏDƏF
+
+  [ ] Map ilə daha çox məsələ həll etmək
+  [ ] Interface-i daha dərindən öyrənmək
+  [ ] Alqoritm düşüncəsini gücləndirmək
+  [ ] HackerRank-da Golang ilə məsələlər həll etmək
+  [ ] Error handling (err != nil) öyrənmək
+
