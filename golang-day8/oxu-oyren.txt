@@ -1,0 +1,91 @@
+DAY - 8 | 15.03.2026 | 3 hour
+Advanced Error Handling
+-Custom errors
+-Error wrapping
+-Best practices in error handling
+-------------------------------------------------------------------------------------------------
+Golangda -- Error Handling nedir 
+eslinde error bir interfasedir goda amma mentigg isleyir 
+diger diller de 
+funksiya işləyir
+    → xəta baş verir
+        → "throw" edilir
+            → yuxarı "bubble up" edir
+                → kimsə "catch" etməsə — proqram çökür
+Golangda ise  : 
+funksiya işləyir
+    → xəta baş verə bilər
+        → funksiya onu return dəyəri kimi qaytarır
+            → çağıran özü yoxlayır
+                → yoxlamazsa — xəta səssizcə itir
+XETA -ERROR DA SADECE BIR deyerdir.
+go deyir {mene xeta ver} dedikde o demekdir ki 
+mene bir metn qaytaran method ver evvelki derslerden oyrenmisdik 
+for  example : Error() string
+type error interface {
+    Error() string
+} // bax bu sekilde 
+Başqa heç nə lazım deyil. 
+Tip nə olduğu vacib deyil — struct ola bilər, int ola bilər, hər nə — sadəcə o metod olsun.
+Tutaq ki bizim bir (SIKAYAET QUTUMUZ VAR ) - BIZE MARAQLI OLAN o qutuya atilan kagizlarin 
+uzerindeki METNDIR . bize lazim deyil onun rengi o , kagiizn qalinligi~!
+Bu o demekdir ki biz oz xetamizi yarada bilerik !
+|-- ERROR() string metodumuz varsa , o tip artiq errordur~!
+Eslinde bu Error() metodu yazmaq error interface impleyment etmekdir~!
+-----------------------------------------------------------------------------------------------
+CUSTOME ERROR : nedir
+bu error odur ki , bizim proyekitmizde lahiyemizde demeli eger bir problem bas vererse , 
+biz sadece desek ki "XETA BAS VERDI"
+bu meselenin helli deyil ve biizm hansi sahede hansi valudesa yeni fielde , xeta bas verib 
+bunu bilmek ucun mueyyen returnlerle cavablar qayatramliyaiq  mesajler daha dogrusu~!
+
+biz bidene *struct* quruuruq ve orda veririk 
+type ValidationsError struct {
+    Field string
+    Value string
+    Message string
+} // bu hele sadece bir struct -dir. Melumat saxlayir.
+bir Error() methodu teyin elave edirik ? 
+func (e *ValidationsError) Error() string {
+    return e.Field + ": " + e.Message
+} // indi bu struct artiq error interfaceni impliment edir .
+Gonun  gozunde bu struckt artiq bir ERRORDUR.~!
+func yasYoxla(yas int) error {
+    if yas < 0 {
+        return &ValidationError{
+            Field:   "yaş",
+            Value:   yas,
+            Message: "mənfi ola bilməz",
+        }
+    }
+    return nil
+}
+(({{__nil — xəta yoxdur deməkdir Go-da__}}))
+--------------------------------------------------------------------------------------------------
+ERROR WRAPPING - | 
+bu nedir tutaq ki bizim 3 mertebeli binamiz var 
+3 -cu metrebe - main() - her seyi idare edir~!
+2 -ci mertebe - istifadeAd() - istifadeci adlari tapir~!
+1 -ci mertebe - dbDenOxu() - databaseden oxuyur~!
+
+eger birinci mertebede xeta bas verse , nece olacaq . Bu xeta yuxari qalxacaq main() -e catmalidir~!
+xeta yuxari qalxanda yolda ne bas verdiyini bilmirikde onu hell etmek ucun !
+1 de deyildiki : "database de xeta bas verdi "
+2 de deyildiki : "database de xeta bas verdi "
+3 de deyildiki : "database de xeta bas verdi "
+
+main() -e catinca "database de xeta bas verdi " bele bir sey verir , axi bu main()  harada? 
+hansı funksiyada? nə vaxt? — heç nə bilmir.
+WRAPPING ILE HELL : 
+1-ci mərtəbə → "database xətası"
+2-ci mərtəbə → "istifadəçiAl: database xətası"     ← öz kontekstini əlavə etdi
+3-cü mərtəbə → "main: istifadəçiAl: database xətası" ← tam yol görünür
+Məntiq
+Wrapping nədir? — Xətanı içinə alaraq üstünə öz kontekstini yazmaq.
+Orijinal xəta → içəri al → üstünə məlumat yaz → yeni xəta kimi qaytar
+\---ORJINAL XETANI VERMIR.
+|--Go-da bu necə işləyir?
+Go deyir: %w işarəsi ilə xətanı sar — içəridə saxla.
+gofmt.Errorf("istifadəçiAl: %w", err)
+(_%w — "bu xətanı içinə al, saxla" deməkdir_)
+(_%v — "sadəcə mətni yaz, unut" deməkdir_)
