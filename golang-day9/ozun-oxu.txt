@@ -1,0 +1,39 @@
+DAY : 9 | 31.03.2026 | 3 HOUR LEARNING THIS LISTEN
+Concurrency in Go
+-Goroutines: creating and managing
+-Channels: basic operations
+-Buffered vs. unbuffered channels
+
+//////////////////////////////////////////////////////////////////////////////////////////////////
+GOROUTINES -nedir ? 
+umumiyyetle golang go runtime terefinden idare olunan bir lightweight(yeni yungul) isci parcasidir!
+OS - treddden ferlqi olaraq baslangicda cemi 2KB stackdan isitifade edir !!
+GO _--_ acar sozu ile ise salinir !
+
+meselen bir func verilir  --> func salamVer() { //bunun icinde bla bla...} 
+func main(){
+    //tutqki deyildi 
+    go salamVer() //bu arrdtiq {goruntine basladi demedkir }
+    salamVer() bu ise demekdir ki esas {goruntine burdadir}
+    time.Sleep(time.Second)
+}
+
+Go-da bir funksiyanı go açar sözü ilə çağırdıqda, o funksiya ayrı bir goroutine-də işləyir. 
+Goroutine adi OS thread-dən çox yüngüldür, başlanğıcda cəmi 2KB yaddaş istifadə edir. 
+Minlərlə goroutine eyni anda işləyə bilər. main() funksiyasının özü də bir goroutine-dir.
+Problemi başa düşmək üçün: əgər go helloWorld() yazıb arxasınca heç nə yazmasaq, main() 
+goroutine-i gözləmədən qurtarır və proqram bütün goroutine-ləri öldürür. Buna görə çıxış görmürük.
+time.Sleep niyə pis həlldir?
+time.Sleep goroutine-in nə vaxt qurtaracağını bilmədən təxmini bir müddət gözləyir. 
+Goroutine tez qurtarsa vaxt itirilir, gec qurtarsa nəticəni görmürük. Etibarsız və peşəkar deyil.
+sync.WaitGroup
+WaitGroup üç metoddan ibarətdir. wg.Add(n) goroutine başlamadan əvvəl çağırılır və 
+"n goroutine gözləyəcəm" deyir. wg.Done() hər goroutine-in içindəki defer ilə yazılır və 
+"bu goroutine qurtardı" bildirir. wg.Wait() isə bütün goroutine-lər Done() çağırana qədər 
+proqramı orada saxlayır.
+defer wg.Done() yazmağın səbəbi funksiya normal qurtarsa da, panic olsa da Done()-un mütləq 
+çağırılmasını təmin etməkdir.
+Pointer niyə lazımdır?
+WaitGroup-u funksiyaya &wg şəklində, yəni pointer ilə göndəririk. 
+Əgər wg göndərsək, kopyası göndərilir və Done() orijinal WaitGroup-u dəyişdirmir. Pointer ilə orijinalın ünvanını göndəririk, beləliklə Done() düzgün işləyir.
+Goroutine-lərin sırası təsadüfidir

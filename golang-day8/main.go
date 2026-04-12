@@ -5,7 +5,7 @@ import (
 	"fmt"
 )
 
-// ─── 1. CUSTOM ERROR ───────────────────────────────────────────
+// ─── 1. CUSTOM ERROR
 
 type DBError struct {
 	Code    int
@@ -16,11 +16,11 @@ func (e *DBError) Error() string {
 	return fmt.Sprintf("DB xətası [%d]: %s", e.Code, e.Message)
 }
 
-// ─── 2. SENTINEL ERROR ─────────────────────────────────────────
+// ─── 2. SENTINEL ERROR
 
 var ErrBağlantı = errors.New("bağlantı xətası")
 
-// ─── 3. AŞAĞI MƏRTƏBƏ — xəta burada doğur ─────────────────────
+// ─── 3. AŞAĞI MƏRTƏBƏ — xəta burada doğur
 
 func dbdenOxu(id int) error {
 	// Fərz et database cavab vermədi
@@ -30,7 +30,7 @@ func dbdenOxu(id int) error {
 	}
 }
 
-// ─── 4. ORTA MƏRTƏBƏ — wrap edir ───────────────────────────────
+// ─── 4. ORTA MƏRTƏBƏ — wrap edir
 
 func istifadəçiAl(id int) error {
 	err := dbdenOxu(id)
@@ -40,7 +40,7 @@ func istifadəçiAl(id int) error {
 	return nil
 }
 
-// ─── 5. MAIN — hər şeyi yoxlayır ───────────────────────────────
+// ─── 5. MAIN — hər şeyi yoxlayır
 
 func main() {
 
@@ -53,7 +53,7 @@ func main() {
 
 	// Xətanın tam yolunu gör
 	fmt.Println("Xəta:", err)
-	fmt.Println("─────────────────────────")
+	fmt.Println("─────────")
 
 	// errors.Is — sentinel error varmı?
 	if errors.Is(err, ErrBağlantı) {
