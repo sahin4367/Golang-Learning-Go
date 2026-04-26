@@ -1,0 +1,38 @@
+18.04.2026 | 
+Select and Sync
+-The select statement
+-Synchronization primitives: WaitGroup,
+Mutex
+________________________________________________________________________________________________________________
+
+Go Concurrency: Select & Sync (Qeydlər)
+
+1. Select Statement (Kanal Kommutatoru)
+Məqsəd: Eyni anda bir neçə kanaldan gələn mesajları dinləmək.
+İş prinsipi: Hansı kanal hazırdırsa, həmin blok işə düşür. Əgər heç bir kanal hazır deyilsə, 
+select bloklanır (gözləyir).
+Default: Əgər default bloku varsa, kanallar hazır olmayanda bloklanmaq əvəzinə default işə düşür 
+(non-blocking).
+Timeout: time.After(duration) 
+istifadə edərək proqramın sonsuz gözləməsinin (deadlock) qarşısını almaq olar.
+
+2. sync.WaitGroup (İşləri İzləmə)
+Məqsəd: İşə salınmış bir neçə goroutine-in (parallel işin) hamısının bitməsini gözləmək.
+Add(n): Sayğacı iş sayı qədər artırır.
+Done(): Hər bir iş bitəndə sayğacı 1 vahid azaldır.
+Wait(): Sayğac 0 olana qədər əsas proqramı (main) dayandırır.
+Qeyd: Əgər Wait() istifadə etməsək, goroutine-lər işini bitirmədən proqram bağlana bilər.
+
+3. sync.Mutex (Resurs Kilidi)
+Məqsəd: Eyni bir dəyişənə (resursa) birdən çox goroutine-in eyni anda daxil olub məlumatı 
+korlamasının qarşısını almaq (Race Condition).
+Lock(): Qapını bağlayır. Yalnız kilidi alan goroutine iş görə bilər.
+Unlock(): Qapını açır. Digər goroutine-lərin girişinə icazə verir.
+Məsləhət: mu.Lock()-dan dərhal sonra defer mu.Unlock() yazmaq unutqanlığın və proqramın 
+ilişib qalmasının qarşısını alır.
+
+Problem-Solving Üçün Qısa Yol (Cheatsheet)
+Problem: Proqram goroutine-lərin bitməsini gözləmir? -> Həll: sync.WaitGroup
+Problem: Dəyişənin qiyməti gözlənilməz (səhv) çıxır? -> Həll: sync.Mutex
+Problem: Bir neçə kanalı eyni anda idarə etmək lazımdır? -> Həll: select
+Problem: Proqram donub qalır (Deadlock)? -> Həll: select daxilində time.After (Timeout)
