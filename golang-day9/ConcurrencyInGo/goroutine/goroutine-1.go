@@ -1,11 +1,11 @@
-// package main
+package main
 
-// import "fmt"
+import "fmt"
 
-// func main() {
-// 	go func() {
-// 		fmt.Println("Qirmizi Isiq~!")
-// 	}()
+func main() {
+	go func() {
+		fmt.Println("Qirmizi Isiq~!")
+	}()
 
-// 	fmt.Println("Yasil  Isiq~!")
-// }
+	fmt.Println("Yasil  Isiq~!")
+}

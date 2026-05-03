@@ -37,3 +37,8 @@ Pointer niyə lazımdır?
 WaitGroup-u funksiyaya &wg şəklində, yəni pointer ilə göndəririk. 
 Əgər wg göndərsək, kopyası göndərilir və Done() orijinal WaitGroup-u dəyişdirmir. Pointer ilə orijinalın ünvanını göndəririk, beləliklə Done() düzgün işləyir.
 Goroutine-lərin sırası təsadüfidir
+
+____________________________________________________________________________________________
+
+Race Condition nedir ? 
+Ferqli treddlerin ve Go Routinlerin eyni bir memoriye uygun gelemsi nemekdir !!!
