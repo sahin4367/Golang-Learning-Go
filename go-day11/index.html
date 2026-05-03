@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+    <title>Flash Coupon System</title>
+    <style>
+        body { font-family: sans-serif; text-align: center; padding: 50px; }
+        #status { margin-top: 20px; padding: 15px; border-radius: 5px; display: none; }
+        .success { background: #d4edda; color: #155724; }
+        .error { background: #f8d7da; color: #721c24; }
+        button { padding: 10px 20px; font-size: 18px; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <h1>Möhtəşəm Bazar Ertəsi Kuponu!</h1>
+    <p>Saniyədə yalnız 1 kupon verilir. Şansını yoxla!</p>
+    <button onclick="getCoupon()">Kuponu Qazan</button>
+    <div id="status"></div>
+
+    <script>
+        async function getCoupon() {
+            const statusDiv = document.getElementById('status');
+            statusDiv.style.display = "block";
+            statusDiv.innerText = "Sorğu göndərilir...";
+
+            try {
+                const response = await fetch('http://localhost:8080/get-coupon');
+                const data = await response.json();
+                
+                statusDiv.innerText = data.message;
+                statusDiv.className = response.ok ? "success" : "error";
+            } catch (err) {
+                statusDiv.innerText = "Serverlə əlaqə kəsildi!";
+                statusDiv.className = "error";
+            }
+        }
+    </script>
+</body>
+</html>
