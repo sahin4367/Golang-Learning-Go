@@ -1,0 +1,14 @@
+[
+  {
+    "id": 1,
+    "name": "Shahin",
+    "balance": 5000,
+    "creditScore": 720
+  },
+  {
+    "id": 2,
+    "name": "Vusal",
+    "balance": 9000,
+    "creditScore": 810
+  }
+]

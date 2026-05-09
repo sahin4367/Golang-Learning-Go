@@ -1,0 +1,7 @@
+Loan Contract
+
+Customer: Shahin
+Balance: 5000
+Credit Score: 720
+Loan Amount: 3000 AZN
+Status: Approved

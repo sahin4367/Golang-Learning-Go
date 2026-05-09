@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Bank Automation System</title>
+
+<style>
+
+body{
+    margin:0;
+    padding:0;
+    background:#0f172a;
+    color:white;
+    font-family:Arial;
+}
+
+.container{
+    width:90%;
+    margin:auto;
+    padding:40px;
+}
+
+h1{
+    text-align:center;
+    margin-bottom:40px;
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+    gap:20px;
+}
+
+.card{
+    background:#1e293b;
+    padding:20px;
+    border-radius:12px;
+    box-shadow:0 0 10px rgba(0,0,0,0.4);
+}
+
+button{
+    padding:12px 20px;
+    border:none;
+    border-radius:8px;
+    background:#22c55e;
+    color:white;
+    cursor:pointer;
+    margin-top:15px;
+}
+
+button:hover{
+    background:#16a34a;
+}
+
+.output{
+    margin-top:15px;
+    background:black;
+    padding:15px;
+    border-radius:8px;
+    min-height:120px;
+    white-space:pre-wrap;
+}
+
+</style>
+</head>
+<body>
+
+<div class="container">
+
+<h1>Bank Document Automation System</h1>
+
+<div class="grid">
+
+<div class="card">
+<h2>Customer Data</h2>
+
+<button onclick="loadCustomer()">
+Load Customer
+</button>
+
+<div class="output" id="customerOutput"></div>
+</div>
+
+<div class="card">
+<h2>Generate Loan Contract</h2>
+
+<button onclick="generateContract()">
+Generate Contract
+</button>
+
+<div class="output" id="contractOutput"></div>
+</div>
+
+<div class="card">
+<h2>XML Response</h2>
+
+<button onclick="generateXML()">
+Generate XML
+</button>
+
+<div class="output" id="xmlOutput"></div>
+</div>
+
+<div class="card">
+<h2>Audit Logs</h2>
+
+<button onclick="showLogs()">
+Show Logs
+</button>
+
+<div class="output" id="logOutput"></div>
+</div>
+
+</div>
+
+</div>
+
+<script>
+
+const customer = {
+    id:1,
+    name:"Shahin",
+    balance:5000,
+    creditScore:720
+}
+
+function loadCustomer(){
+
+    document.getElementById("customerOutput").innerHTML = `
+ID: ${customer.id}
+
+Name: ${customer.name}
+
+Balance: ${customer.balance}
+
+Credit Score: ${customer.creditScore}
+`
+}
+
+function generateContract(){
+
+    document.getElementById("contractOutput").innerHTML = `
+Loan Contract
+
+Customer: ${customer.name}
+
+Balance: ${customer.balance}
+
+Credit Score: ${customer.creditScore}
+
+Loan Amount: 3000 AZN
+
+Status: Approved
+`
+}
+
+function generateXML(){
+
+    document.getElementById("xmlOutput").innerText = `
+<loan>
+   <customer>${customer.name}</customer>
+   <amount>3000</amount>
+   <status>Approved</status>
+</loan>
+`
+}
+
+function showLogs(){
+
+    document.getElementById("logOutput").innerHTML = `
+2026-05-09 Loan generated
+
+2026-05-09 XML exported
+
+2026-05-09 Backup completed
+`
+}
+
+</script>
+
+</body>
+</html>

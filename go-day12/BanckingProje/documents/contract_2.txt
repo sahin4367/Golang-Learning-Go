@@ -1,0 +1,7 @@
+Loan Contract
+
+Customer: Vusal
+Balance: 9000
+Credit Score: 810
+Loan Amount: 5000 AZN
+Status: Approved
