@@ -1,0 +1,10 @@
+(File Handling and I/O
+-Reading from and writing to files
+-Working with JSON and XML
+-Using the io and os packages
+)
+ ---->BUNLAR io ile COPY OLUNUB !!!
+ 
+ ______________________________________________________________________________________________
+
+

@@ -1,0 +1,198 @@
+File Handling and I/O
+-Reading from and writing to files
+-Working with JSON and XML
+-Using the io and os packages
+
+______________________________________________________________________________________________
+
+# Golang File Handling and I O Notes
+
+## 1 File Handling Nedir
+
+Go dilinde fayllarla islemek ucun esasen bu package lerden istifade olunur
+
+os
+io
+bufio
+encoding json
+encoding xml
+
+Bu package ler fayl yaratmaq fayl oxumaq fayla yazmaq melumat transfer etmek JSON ve XML parse etmek ucun istifade olunur
+
+---
+
+## 2 Fayla Yazmaq Write File
+
+```go
+data := []byte("Salam Shahin")
+
+err := os.WriteFile("test.txt", data, 0644)
+
+______________________________________________________________________________________________
+Izah
+
+data string melumatini byte formatina cevirir
+
+test txt yaradilan faylin adidir
+
+0644 permission deyeridir
+
+3 Fayldan Oxumaq Read File
+data, err := os.ReadFile("test.txt")
+
+fmt.Println(string(data))
+
+Bu kod fayldaki melumati oxuyur ve ekrana cixarir
+
+4 os Create
+file, err := os.Create("notes.txt")
+
+Yeni fayl yaradir
+
+5 defer file Close
+defer file.Close()
+
+Bu hisss memory leak file lock ve resource problemlerinin qarsisini alir
+
+Production code ucun vacibdir
+
+6 JSON Nedir
+
+JSON API lerde en cox istifade olunan data formatidir
+
+Struct dan JSON yaratmaq
+
+data, _ := json.Marshal(user)
+
+Output
+
+{
+  "name": "Shahin",
+  "age": 21
+}
+7 JSON Unmarshal
+
+JSON melumatini Struct formatina cevirir
+
+json.Unmarshal([]byte(data), &user)
+8 XML Nedir
+
+XML de data formatidir
+
+Tag based isleyir
+
+Numune
+
+<user>
+    <name>Vusal</name>
+    <age>33</age>
+</user>
+9 Struct dan XML yaratmaq
+data, _ := xml.Marshal(user)
+10 XMLName Nedir
+XMLName xml.Name `xml:"user"`
+
+Bu root tag yaradir
+
+<user>
+11 XML Tag ler
+Name string `xml:"name"`
+
+Bele cevrilir
+
+<name>Vusal</name>
+12 Marshal Nedir
+
+Struct dan JSON ve XML yaratmaq ucun istifade olunur
+
+Struct to Format
+
+13 Unmarshal Nedir
+
+JSON ve XML melumatini Struct formatina cevirir
+
+Format to Struct
+
+14 Byte Nedir
+
+Go melumati byte formatinda saxlayir
+
+Buna gore
+
+fmt.Println(data)
+
+reqemler gosterir
+
+Duzgun variant
+
+fmt.Println(string(data))
+15 XML Attribute
+ID int `xml:"id,attr"`
+
+Output
+
+<user id="1">
+16 XMLIndent
+
+Daha seliqeli XML verir
+
+xml.MarshalIndent(user, "", "  ")
+17 io Package
+
+Data transfer etmek ucun istifade olunur
+
+Meselen
+
+file den file a
+
+response dan file a
+
+file dan response a
+
+18 io Copy
+io.Copy(destination, source)
+
+Bir fayldan digerine melumat kocurur
+
+19 bufio
+
+Daha performansli oxuma metodudur
+
+Line by line oxuma
+
+scanner := bufio.NewScanner(file)
+
+for scanner.Scan() {
+    fmt.Println(scanner.Text())
+}
+20 Backend de Istifade Saheleri
+
+JSON REST API lerde
+
+XML SOAP API lerde
+
+io Copy File upload download sistemlerinde
+
+os Environment variables ucun
+
+bufio Log processing ucun
+
+File Handling Upload sistemleri ucun
+
+21 Oyrendiklerimizin Mentigi
+
+Marshal Struct dan format yaradir
+
+Unmarshal formatdan Struct yaradir
+
+ReadFile fayli oxuyur
+
+WriteFile fayla yazir
+
+io Copy transfer edir
+
+bufio suretli oxuyur
+
+XML tag based formatdir
+
+JSON API formatidir
