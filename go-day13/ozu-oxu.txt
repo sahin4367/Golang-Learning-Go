@@ -1,0 +1,94 @@
+Testing in Go | 10.05.2026 | 
+-Writing unit tests
+-Table-driven tests
+-Benchmarking
+-Mocking dependencies
+|________________________________________________________________________________________________|
+|                                                                                                |
+Bunun üçün Go-nun built-in testing package-indən istifadə etdik. 
+Go-da test yazmaq üçün faylın adı mütləq _test.go ilə bitməlidir. 
+Biz greetings_test.go adlı fayl yaratdıq və testləri həmin faylda yazdıq.
+
+Test function-larının adı mütləq Test ilə başlamalıdır. Məsələn:
+func TestHelloName(t *testing.T)
+Əgər Test ilə başlamasa Go həmin function-u test kimi qəbul etmir. 
+t *testing.T isə Go-nun test object-idir və onun vasitəsilə test fail olduqda error göstərə bilirik.
+
+Biz Hello() adlı function-u test etdik. Məqsəd o idi ki function düzgün 
+message qaytarsın və error verməsin. Bunun üçün:
+msg, err := Hello("Gladys")
+şəklində function çağırıldı.
+Sonra yoxlanıldı ki:
+qaytarılan message içində "Gladys" adı varmı error gəlirmi
+
+Əgər ad message içində olmasa və ya error gəlsə test fail olur . Bunun üçün belə bir yoxlama yazıldı:
+
+if !want.MatchString(msg) || err != nil
+
+Burada regexp package-indən istifadə edildi. 
+regexp.MustCompile() vasitəsilə message içində "Gladys" sözünün olub-olmaması yoxlanıldı.
+
+Daha sonra ikinci test yazıldı:
+
+func TestHelloEmpty(t *testing.T)
+
+Bu test boş string göndərirdi:
+
+Hello("")
+
+Məqsəd error handling-in düzgün işlədiyini yoxlamaq idi. Çünki Hello() function-u boş ad qəbul etdikdə error qaytarmalı idi.
+
+Function daxilində belə bir hissə vardı:
+
+if name == "" {
+    return "", errors.New("empty name")
+}
+
+Test yoxlayırdı ki:
+
+message boş olsun
+error mütləq gəlsin
+
+Əgər error gəlməsə test fail olurdu.
+
+Sonra terminalda:
+
+go test
+
+command-i işə salındı. Bu command bütün _test.go fayllarını tapır və içindəki testləri run edir.
+
+Terminalda:
+
+PASS
+
+çıxdı. Bu o deməkdir ki bütün testlər uğurla keçdi və kod düzgün işləyir.
+
+Sonra:
+
+ok      example.com/greetings   0.972s
+
+çıxdı. Burada:
+
+ok → testlərin uğurlu olduğunu
+example.com/greetings → hansı package-in test olunduğunu
+0.972s → testlərin neçə saniyəyə işlədiyini göstərir.
+
+Biz həmçinin öyrəndik ki testing gələcəkdə yaranacaq bug-ları tapmaq üçün çox vacibdir. 
+Əgər kimsə kodu dəyişsə və səhv etsə, testlər bunu dərhal göstərir.
+
+Tutorial-da bilərəkdən bug yaradıldı. Hello() function-u dəyişdirildi 
+və artıq istifadəçinin adı message içində göstərilmədi. Nəticədə test fail oldu və 
+terminalda FAIL göründü. Bu bizə göstərdi ki testlər kodun qırıldığını avtomatik tapa bilir.
+
+Bu gün həmçinin unit testing anlayışını öyrəndik. Unit testing kodun kiçik hissələrini 
+ayrıca test etmək deməkdir. Bundan əlavə table-driven tests haqqında danışdıq. Bu üsul 
+Go-da professional şəkildə çox istifadə olunur və bir neçə test case-i cleaner formada 
+yazmağa kömək edir.
+
+Benchmarking mövzusunda isə kodun performansını ölçməyi öyrəndik. go test -bench=. 
+command-i ilə function-un neçə dəfə və nə qədər sürətlə işlədiyini ölçmək mümkündür.
+
+Mocking dependencies hissəsində isə real database və API istifadə etmədən fake 
+object-lərlə test yazmağın məntiqini öyrəndik. Bunun üçün interface və mock object-lərdən 
+istifadə olunur. Bu üsul testləri daha sürətli və stabil edir.
+
